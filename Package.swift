@@ -14,11 +14,19 @@ let package = Package(
 			name: "UIToolKit",
 			targets: ["UIToolKit"])
 	],
+	dependencies: [
+		.package(url: "https://github.com/EmilioPelaez/CGMath", from: .init(1, 0, 0)),
+	],
 	targets: [
 		// Targets are the basic building blocks of a package, defining a module or a test suite.
 		// Targets can depend on other targets in this package and products from dependencies.
 		.target(name: "ToolKit"),
-		.target(name: "UIToolKit"),
+		.target(
+			name: "UIToolKit",
+			dependencies: [
+				"CGMath",
+				"ToolKit",
+			]),
 		.testTarget(
 			name: "ToolKitTests",
 			dependencies: ["ToolKit"]),
