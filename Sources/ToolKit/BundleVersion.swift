@@ -2,7 +2,7 @@
 //  Created by Emilio Peláez on 28/1/23.
 //
 
-import UIKit
+import Foundation
 
 public extension Bundle {
 	

@@ -3,14 +3,21 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+#endif
 
 public extension View {
 	func onShake(perform action: @escaping () -> Void) -> some View {
+#if canImport(UIKit)
 		modifier(DeviceShakeViewModifier(action: action))
+#else
+		self
+#endif
 	}
 }
 
+#if canImport(UIKit)
 extension UIDevice {
 	static let deviceDidShakeNotification = Notification.Name(rawValue: "deviceDidShakeNotification")
 }
@@ -33,3 +40,4 @@ struct DeviceShakeViewModifier: ViewModifier {
 			}
 	}
 }
+#endif
