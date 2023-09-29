@@ -7,17 +7,76 @@ import SwiftUI
 import UIKit
 #endif
 
+@available(iOS 16.0, iOSApplicationExtension 16.0, *)
 public extension View {
-	func onShake(perform action: @escaping () -> Void) -> some View {
-#if canImport(UIKit)
-		modifier(DeviceShakeViewModifier(action: action))
+	func onShakeController() -> some View {
+#if canImport(UIKit) && !os(watchOS)
+		modifier(OnShakeController())
+#else
+		self
+#endif
+	}
+	
+	func onShake(_ perform: @escaping () -> Void) -> some View {
+#if canImport(UIKit) && !os(watchOS)
+		modifier(OnShakeObserver(action: perform))
 #else
 		self
 #endif
 	}
 }
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
+struct OnShakeKey: PreferenceKey {
+	struct Perform: Equatable {
+		let id = UUID()
+		
+		let closure: () -> Void
+		
+		func callAsFunction() { closure() }
+		
+		static func == (lhs: OnShakeKey.Perform, rhs: OnShakeKey.Perform) -> Bool {
+			lhs.id == rhs.id
+		}
+	}
+	
+	static var defaultValue: Perform?
+	
+	static func reduce(value: inout Perform?, nextValue: () -> Perform?) {
+		let perform1 = value?.closure
+		let perform2 = nextValue()
+		value = .init {
+			perform1?()
+			perform2?()
+		}
+	}
+}
+
+@available(iOS 16.0, iOSApplicationExtension 16.0, *)
+struct OnShakeController: ViewModifier {
+	@State var perform: OnShakeKey.Perform?
+	
+	func body(content: Content) -> some View {
+		content
+			.onReceive(NotificationCenter.default.publisher(for: UIDevice.deviceDidShakeNotification)) { _ in
+				perform?()
+			}
+			.onPreferenceChange(OnShakeKey.self) { perform = $0 }
+	}
+}
+
+struct OnShakeObserver: ViewModifier {
+	@State var perform: OnShakeKey.Perform?
+	
+	let action: () -> Void
+	
+	func body(content: Content) -> some View {
+		content
+			.onPreferenceChange(OnShakeKey.self) { perform = $0 }
+			.preference(key: OnShakeKey.self, value: perform ?? .init(closure: action))
+	}
+}
+
 extension UIDevice {
 	static let deviceDidShakeNotification = Notification.Name(rawValue: "deviceDidShakeNotification")
 }
@@ -27,17 +86,6 @@ extension UIWindow {
 		if motion == .motionShake {
 			NotificationCenter.default.post(name: UIDevice.deviceDidShakeNotification, object: nil)
 		}
-	}
-}
-
-struct DeviceShakeViewModifier: ViewModifier {
-	let action: () -> Void
-	
-	func body(content: Content) -> some View {
-		content
-			.onReceive(NotificationCenter.default.publisher(for: UIDevice.deviceDidShakeNotification)) { _ in
-				action()
-			}
 	}
 }
 #endif
