@@ -12,10 +12,14 @@ let package = Package(
 			targets: ["ToolKit"]),
 		.library(
 			name: "UIToolKit",
-			targets: ["UIToolKit"])
+			targets: ["UIToolKit"]),
+		.library(
+			name: "AboutKit",
+			targets: ["AboutKit"]),
 	],
 	dependencies: [
 		.package(url: "https://github.com/EmilioPelaez/CGMath", from: .init(1, 0, 0)),
+		.package(url: "https://github.com/EmilioPelaez/HierarchyResponder", from: .init(1, 0, 0)),
 	],
 	targets: [
 		// Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,10 +29,21 @@ let package = Package(
 			name: "UIToolKit",
 			dependencies: [
 				"CGMath",
+				"HierarchyResponder",
 				"ToolKit",
-			]),
+			]
+		),
+		.target(
+			name: "AboutKit",
+			dependencies: [
+				"HierarchyResponder",
+				"ToolKit",
+				"UIToolKit",
+			]
+		),
 		.testTarget(
 			name: "ToolKitTests",
-			dependencies: ["ToolKit"]),
+			dependencies: ["ToolKit"]
+		),
 	]
 )

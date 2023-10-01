@@ -31,7 +31,7 @@ public extension Bundle {
 		
 		public init(bundle: Bundle) {
 			let numberString: String = {
-				guard let string = (bundle.infoDictionary?["CFBundleShortVersionString"] as? String)?.notEmptyOrNil else {
+				guard let string = (bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String)?.notEmptyOrNil else {
 					assertionFailure("Key CFBundleShortVersionString not found in Info.plist")
 					return "0.0"
 				}
@@ -39,7 +39,7 @@ public extension Bundle {
 			}()
 			
 			let buildString: String? = {
-				guard let string = (bundle.infoDictionary?["CFBundleVersion"] as? String)?.notEmptyOrNil else {
+				guard let string = (bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String)?.notEmptyOrNil else {
 					print("Key CFBundleVersion not found in Info.plist")
 					return nil
 				}

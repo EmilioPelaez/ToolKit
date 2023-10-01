@@ -5,7 +5,13 @@
 import SwiftUI
 
 public struct ModalDismissButton: View {
-	let dismiss: () -> Void
+	@Environment(\.dismiss) var dismissAction
+	
+	let dismiss: (() -> Void)?
+	
+	public init() {
+		self.dismiss = nil
+	}
 	
 	public init(_ dismissAction: DismissAction) {
 		self.dismiss = dismissAction.callAsFunction
@@ -20,10 +26,18 @@ public struct ModalDismissButton: View {
 	}
 	
 	public var body: some View {
-		Button(action: dismiss) {
+		Button(action: buttonAction) {
 			Image(systemName: "xmark.circle.fill")
 				.foregroundStyle(Color.gray)
 				.symbolRenderingMode(.hierarchical)
+		}
+	}
+	
+	func buttonAction() {
+		if let dismiss {
+			dismiss()
+		} else {
+			dismissAction()
 		}
 	}
 }
