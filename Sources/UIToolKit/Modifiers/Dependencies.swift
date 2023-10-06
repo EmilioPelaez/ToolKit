@@ -5,8 +5,6 @@
 import SwiftUI
 
 public protocol HierarchyDependency {
-	associatedtype Key: EnvironmentKey where Key.Value == Bool
-	static var path: WritableKeyPath<EnvironmentValues, Bool> { get }
 	static var requirement: DependencyRequirement { get }
 }
 
@@ -28,32 +26,39 @@ public enum DependencyRequirement {
 }
 
 public extension View {
-	func requires<D: HierarchyDependency>(_ dependency: D.Type) -> some View {
-		modifier(HierarchyDependencyRequirement(dependency: dependency))
+	func requires(_ dependency: any HierarchyDependency.Type) -> some View {
+		transformEnvironment(\.hierarchyDependencies) { dependencies in
+			if dependencies.contains(where: { $0 == dependency }) { return }
+			switch dependency.requirement {
+			case .strict:
+#if DEBUG
+				fatalError("WARNING: Dependency \(String(describing: dependency)) not installed")
+#endif
+			case .relaxed:
+#if DEBUG
+				print("WARNING: Dependency \(String(describing: dependency)) not installed")
+#endif
+			}
+		}
 	}
 	
-	func installs<D: HierarchyDependency>(_ dependency: D.Type) -> some View {
-		environment(dependency.path, true)
+	func installs<D: HierarchyDependency>(_ dependency: D.Type, preventDuplicates: Bool = false) -> some View {
+		transformEnvironment(\.hierarchyDependencies) { dependencies in
+			if preventDuplicates && dependencies.contains(where: { $0 == dependency }) {
+				fatalError("Dependency \(String(describing: dependency)) is already installed")
+			}
+			dependencies.append(dependency)
+		}
 	}
 }
 
-struct HierarchyDependencyRequirement<D: HierarchyDependency>: ViewModifier {
-	let dependency: D.Type
-	
-	func body(content: Content) -> some View {
-		content
-			.transformEnvironment(dependency.path) { value in
-				guard !value else { return }
-				switch dependency.requirement {
-				case .strict:
-#if DEBUG
-					fatalError("WARNING: Dependency \(String(describing: dependency)) not installed")
-#endif
-				case .relaxed:
-#if DEBUG
-					print("WARNING: Dependency \(String(describing: dependency)) not installed")
-#endif
-				}
-			}
+struct HierarchyDependenciesKey: EnvironmentKey {
+	static var defaultValue: [any HierarchyDependency.Type] = []
+}
+
+extension EnvironmentValues {
+	var hierarchyDependencies: [any HierarchyDependency.Type] {
+		get { self[HierarchyDependenciesKey.self] }
+		set { self[HierarchyDependenciesKey.self] = newValue }
 	}
 }
