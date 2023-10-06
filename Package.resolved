@@ -8,6 +8,15 @@
         "revision" : "352dc9a0c5ea8db162714944c68de1fa7ae3e4bf",
         "version" : "1.0.4"
       }
+    },
+    {
+      "identity" : "hierarchyresponder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/EmilioPelaez/HierarchyResponder",
+      "state" : {
+        "revision" : "3ed6833610b046c83c4f4322af3ee652f50f31ff",
+        "version" : "1.1.1"
+      }
     }
   ],
   "version" : 2
