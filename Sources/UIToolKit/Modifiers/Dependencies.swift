@@ -4,13 +4,7 @@
 
 import SwiftUI
 
-public protocol HierarchyDependency {
-	static var requirement: DependencyRequirement { get }
-}
-
-public extension HierarchyDependency {
-	var requirement: DependencyRequirement { .strict }
-}
+public protocol HierarchyDependency {}
 
 public enum DependencyRequirement {
 	/**
@@ -23,32 +17,38 @@ public enum DependencyRequirement {
 	 installed and building for debug.
 	 */
 	case relaxed
+	
+	public static let `default` = DependencyRequirement.relaxed
 }
 
 public extension View {
-	func requires(_ dependency: any HierarchyDependency.Type) -> some View {
+	func requires(_ dependency: any HierarchyDependency.Type, mode: DependencyRequirement = .default) -> some View {
+#if DEBUG
 		transformEnvironment(\.hierarchyDependencies) { dependencies in
 			if dependencies.contains(where: { $0 == dependency }) { return }
-			switch dependency.requirement {
+			switch mode {
 			case .strict:
-#if DEBUG
 				fatalError("WARNING: Dependency \(String(describing: dependency)) not installed")
-#endif
 			case .relaxed:
-#if DEBUG
 				print("WARNING: Dependency \(String(describing: dependency)) not installed")
-#endif
 			}
 		}
+#else
+		self
+#endif
 	}
 	
 	func installs<D: HierarchyDependency>(_ dependency: D.Type, preventDuplicates: Bool = false) -> some View {
+#if DEBUG
 		transformEnvironment(\.hierarchyDependencies) { dependencies in
 			if preventDuplicates && dependencies.contains(where: { $0 == dependency }) {
 				fatalError("Dependency \(String(describing: dependency)) is already installed")
 			}
 			dependencies.append(dependency)
 		}
+#else
+		self
+#endif
 	}
 }
 
