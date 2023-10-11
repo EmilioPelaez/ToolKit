@@ -7,11 +7,14 @@ import SwiftUI
 import UIKit
 #endif
 
+public enum ShakeController: HierarchyDependency {}
+
 @available(iOS 16.0, iOSApplicationExtension 16.0, *)
 public extension View {
 	func onShakeController() -> some View {
 #if canImport(UIKit) && !os(watchOS)
 		modifier(OnShakeController())
+			.installs(ShakeController.self, preventDuplicates: true)
 #else
 		self
 #endif
@@ -20,6 +23,7 @@ public extension View {
 	func onShake(_ perform: @escaping () -> Void) -> some View {
 #if canImport(UIKit) && !os(watchOS)
 		modifier(OnShakeObserver(action: perform))
+			.requires(ShakeController.self, mode: .relaxed)
 #else
 		self
 #endif

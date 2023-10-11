@@ -7,6 +7,7 @@ import SwiftUI
 public extension View {
 	func receiveContentMargin() -> some View {
 		modifier(ContentMarginModifier())
+			.installs(ContentMarginModifier.self, preventDuplicates: true)
 	}
 	
 	func addToBottomMaring() -> some View {
@@ -17,6 +18,7 @@ public extension View {
 											value: EdgeInsets(top: 0, leading: 0, bottom: proxy.size.height, trailing: 0))
 			}
 		}
+		.requires(ContentMarginModifier.self, mode: .relaxed)
 	}
 }
 
@@ -32,10 +34,10 @@ struct ContentMarginEnvironmentKey: EnvironmentKey {
 	static var defaultValue: EdgeInsets = .init()
 }
 
-struct ContentMarginModifier: ViewModifier {
+public struct ContentMarginModifier: ViewModifier, HierarchyDependency {
 	@State private var margin: EdgeInsets = .init()
 	
-	func body(content: Content) -> some View {
+	public func body(content: Content) -> some View {
 		content
 			.onPreferenceChange(ContentMarginPreferenceKey.self) { margin = $0 }
 			.environment(\.contentMargin, margin)
