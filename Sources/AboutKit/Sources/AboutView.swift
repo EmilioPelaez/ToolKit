@@ -11,9 +11,11 @@ public struct AboutView: View {
 	private let iconSize: CGFloat = 150
 	
 	let details: AppDetails
+	let links: [AboutLink]
 	
-	public init(details: AppDetails) {
+	public init(details: AppDetails, links: [AboutLink] = []) {
 		self.details = details
+		self.links = links
 	}
 	
 	public var body: some View {
@@ -40,13 +42,14 @@ public struct AboutView: View {
 				Text(details.author)
 					.font(.title)
 			}
-			if let url = details.moreAppsURL {
+			.paddingMedium(.bottom)
+			ForEach(links) { link in
 				Button {
-					openURL(url)
+					openURL(link.url)
 				} label: {
-					Label("More Apps", systemImage: "square.on.square.badge.person.crop")
+					Label(link.title, systemImage: link.symbol)
 				}
-				.buttonStyle(.capsule(.accentColor))
+				.buttonStyle(.capsule(link.color))
 			}
 		}
 	}
