@@ -16,6 +16,9 @@ let package = Package(
 		.library(
 			name: "AboutKit",
 			targets: ["AboutKit"]),
+		.library(
+			name: "CompatibilityKit",
+			targets: ["CompatibilityKit"])
 	],
 	dependencies: [
 		.package(url: "https://github.com/EmilioPelaez/CGMath", from: .init(1, 0, 0)),
@@ -41,6 +44,7 @@ let package = Package(
 				"UIToolKit",
 			]
 		),
+		.target(name: "CompatibilityKit"),
 		.testTarget(
 			name: "ToolKitTests",
 			dependencies: ["ToolKit"]
