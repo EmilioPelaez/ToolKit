@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIToolKit
+import CompatibilityKit
 
 @main
 struct ExampleApp: App {
@@ -14,6 +15,7 @@ struct ExampleApp: App {
 		WindowGroup {
 			ContentView()
 				.installs(MyDependency.self)
+				.widgetBackground()
 		}
 	}
 }

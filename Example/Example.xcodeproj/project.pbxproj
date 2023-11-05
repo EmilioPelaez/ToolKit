@@ -3,20 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C8945E5D2AF8330900A4196D /* AboutKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8945E5C2AF8330900A4196D /* AboutKit */; };
+		C8945E5F2AF8330900A4196D /* CompatibilityKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8945E5E2AF8330900A4196D /* CompatibilityKit */; };
+		C8945E612AF8330900A4196D /* ToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8945E602AF8330900A4196D /* ToolKit */; };
+		C8945E632AF8330900A4196D /* UIToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8945E622AF8330900A4196D /* UIToolKit */; };
 		C8CA11FC2AD0323000260459 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA11FB2AD0323000260459 /* ExampleApp.swift */; };
 		C8CA11FE2AD0323000260459 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA11FD2AD0323000260459 /* ContentView.swift */; };
 		C8CA12002AD0323100260459 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8CA11FF2AD0323100260459 /* Assets.xcassets */; };
 		C8CA12032AD0323100260459 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8CA12022AD0323100260459 /* Preview Assets.xcassets */; };
-		C8CA120B2AD032DC00260459 /* AboutKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8CA120A2AD032DC00260459 /* AboutKit */; };
-		C8CA120D2AD032DC00260459 /* ToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8CA120C2AD032DC00260459 /* ToolKit */; };
-		C8CA120F2AD032DC00260459 /* UIToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C8CA120E2AD032DC00260459 /* UIToolKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C8945E5A2AF832EC00A4196D /* ToolKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ToolKit; path = ..; sourceTree = "<group>"; };
 		C8CA11F82AD0323000260459 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8CA11FB2AD0323000260459 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		C8CA11FD2AD0323000260459 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -29,20 +31,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8CA120B2AD032DC00260459 /* AboutKit in Frameworks */,
-				C8CA120D2AD032DC00260459 /* ToolKit in Frameworks */,
-				C8CA120F2AD032DC00260459 /* UIToolKit in Frameworks */,
+				C8945E612AF8330900A4196D /* ToolKit in Frameworks */,
+				C8945E632AF8330900A4196D /* UIToolKit in Frameworks */,
+				C8945E5F2AF8330900A4196D /* CompatibilityKit in Frameworks */,
+				C8945E5D2AF8330900A4196D /* AboutKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C8945E5B2AF8330800A4196D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C8CA11EF2AD0322F00260459 = {
 			isa = PBXGroup;
 			children = (
+				C8945E5A2AF832EC00A4196D /* ToolKit */,
 				C8CA11FA2AD0323000260459 /* Example */,
 				C8CA11F92AD0323000260459 /* Products */,
+				C8945E5B2AF8330800A4196D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,9 +102,10 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				C8CA120A2AD032DC00260459 /* AboutKit */,
-				C8CA120C2AD032DC00260459 /* ToolKit */,
-				C8CA120E2AD032DC00260459 /* UIToolKit */,
+				C8945E5C2AF8330900A4196D /* AboutKit */,
+				C8945E5E2AF8330900A4196D /* CompatibilityKit */,
+				C8945E602AF8330900A4196D /* ToolKit */,
+				C8945E622AF8330900A4196D /* UIToolKit */,
 			);
 			productName = Example;
 			productReference = C8CA11F82AD0323000260459 /* Example.app */;
@@ -123,7 +136,6 @@
 			);
 			mainGroup = C8CA11EF2AD0322F00260459;
 			packageReferences = (
-				C8CA12092AD032DC00260459 /* XCLocalSwiftPackageReference ".." */,
 			);
 			productRefGroup = C8CA11F92AD0323000260459 /* Products */;
 			projectDirPath = "";
@@ -357,23 +369,20 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		C8CA12092AD032DC00260459 /* XCLocalSwiftPackageReference ".." */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ..;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		C8CA120A2AD032DC00260459 /* AboutKit */ = {
+		C8945E5C2AF8330900A4196D /* AboutKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AboutKit;
 		};
-		C8CA120C2AD032DC00260459 /* ToolKit */ = {
+		C8945E5E2AF8330900A4196D /* CompatibilityKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CompatibilityKit;
+		};
+		C8945E602AF8330900A4196D /* ToolKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ToolKit;
 		};
-		C8CA120E2AD032DC00260459 /* UIToolKit */ = {
+		C8945E622AF8330900A4196D /* UIToolKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIToolKit;
 		};

@@ -7,8 +7,8 @@ import WidgetKit
 
 public extension View {
 	@ViewBuilder
-	func widgetBackground(alignment: Alignment, _ backgroundContent: () -> some View) -> some View {
-		if #available(iOSApplicationExtension 17.0, iOS 17.0, *) {
+	func widgetBackground(alignment: Alignment = .center, backgroundContent: () -> some View = { Color.clear }) -> some View {
+		if #available(iOS 17.0, iOSApplicationExtension 17.0, *) {
 			containerBackground(for: .widget, alignment: alignment) {
 				backgroundContent()
 			}
