@@ -18,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C821734A2B61CFB800250758 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C8945E5A2AF832EC00A4196D /* ToolKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ToolKit; path = ..; sourceTree = "<group>"; };
 		C8CA11F82AD0323000260459 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8CA11FB2AD0323000260459 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		C8CA11EF2AD0322F00260459 = {
 			isa = PBXGroup;
 			children = (
+				C821734A2B61CFB800250758 /* README.md */,
 				C8945E5A2AF832EC00A4196D /* ToolKit */,
 				C8CA11FA2AD0323000260459 /* Example */,
 				C8CA11F92AD0323000260459 /* Products */,
