@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
 	name: "ToolKit",
-	platforms: [.iOS(.v16), .tvOS(.v16), .macOS(.v13), .watchOS(.v10)],
+	platforms: [.iOS(.v16), .tvOS(.v16), .macOS(.v13), .watchOS(.v9)],
 	products: [
 		.library(
 			name: "ToolKit",

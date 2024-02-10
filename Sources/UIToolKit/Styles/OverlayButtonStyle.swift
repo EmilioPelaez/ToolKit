@@ -4,6 +4,7 @@
 
 import SwiftUI
 
+@available(watchOS 10.0, *)
 public struct OverlayButtonStyle: ButtonStyle {
 	@Environment(\.isEnabled) private var isEnabled
 	
@@ -23,6 +24,7 @@ public struct OverlayButtonStyle: ButtonStyle {
 	}
 }
 
+@available(watchOS 10.0, *)
 public extension ButtonStyle where Self == OverlayButtonStyle {
 	static func overlay(_ color: Color) -> OverlayButtonStyle {
 		OverlayButtonStyle(color: color)
