@@ -24,7 +24,7 @@ extension HorizontalAlignment {
 	var general: Alignment {
 		switch self {
 		case .center: return .center
-		case .trailing: return .leading
+		case .trailing: return .trailing
 		case .leading: return .leading
 		case _: return .center
 		}

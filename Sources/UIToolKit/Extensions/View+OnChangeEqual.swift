@@ -6,7 +6,7 @@ import SwiftUI
 
 public extension View {
 	func onChange<T: Equatable>(of value: T, equals baseline: T, perform: @escaping (T) -> Void) -> some View {
-		onChange(of: value) { newValue in
+		onChange(of: value) { _, newValue in
 			guard newValue == baseline else { return }
 			perform(newValue)
 		}
