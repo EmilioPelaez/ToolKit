@@ -23,7 +23,7 @@ struct ExtractEnvironment<V: Equatable>: ViewModifier {
 	
 	func body(content: Content) -> some View {
 		content
-			.onChange(of: environment[keyPath: path]) { _, newValue in
+			.onChange(of: environment[keyPath: path]) { newValue in
 				binding.wrappedValue = newValue
 			}
 	}
