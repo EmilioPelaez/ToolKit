@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+#if canImport(WidgetKit)
 import WidgetKit
 
 public extension WidgetConfiguration {
@@ -14,3 +15,4 @@ public extension WidgetConfiguration {
 		}
 	}
 }
+#endif

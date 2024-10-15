@@ -15,7 +15,6 @@ struct ExampleApp: App {
 		WindowGroup {
 			ContentView()
 				.installs(MyDependency.self)
-				.widgetBackground()
 		}
 	}
 }

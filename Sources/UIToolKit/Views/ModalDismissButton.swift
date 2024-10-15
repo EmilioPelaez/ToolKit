@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ToolKit
 
 public struct ModalDismissButton: View {
 	@Environment(\.dismiss) var dismissAction
@@ -28,9 +29,14 @@ public struct ModalDismissButton: View {
 	public var body: some View {
 		Button(action: buttonAction) {
 			Image(systemName: "xmark.circle.fill")
-				.foregroundStyle(Color.gray)
+				.if(Platform.current == .vision) {
+					$0.foregroundStyle(.white)
+				} else: {
+					$0.foregroundStyle(.gray)
+				}
 				.symbolRenderingMode(.hierarchical)
 		}
+		.help("Dismiss")
 	}
 	
 	func buttonAction() {
