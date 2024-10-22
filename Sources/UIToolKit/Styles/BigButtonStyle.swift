@@ -24,6 +24,9 @@ public struct BigButtonStyle: ButtonStyle {
 					.brightness(configuration.isPressed ? -0.25 : 0)
 			}
 			.cornerRadius(.paddingLarge)
+#if canImport(UIKit) && !os(watchOS)
+			.hoverEffect(.lift)
+#endif
 			.visiblyDisabled(!isEnabled)
 			.frame(maxWidth: 400)
 	}

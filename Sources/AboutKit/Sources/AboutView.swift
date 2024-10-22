@@ -57,7 +57,11 @@ public struct AboutView: View {
 	var iconView: some View {
 		details.icon
 			.resizable()
-			.clipShape(RoundedRectangle(cornerRadius: iconSize / 6, style: .continuous))
+			.if(Platform.current == .vision) {
+				$0.clipShape(Circle())
+			} else : {
+				$0.clipShape(RoundedRectangle(cornerRadius: iconSize / 6, style: .continuous))
+			}
 	}
 }
 

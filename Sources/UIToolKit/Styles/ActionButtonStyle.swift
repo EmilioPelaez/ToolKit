@@ -21,6 +21,9 @@ public struct ActionButtonStyle: ButtonStyle {
 					.brightness(configuration.isPressed ? -0.25 : 0)
 			}
 			.cornerRadius(.paddingMedium)
+#if canImport(UIKit) && !os(watchOS)
+			.hoverEffect(.lift)
+#endif
 			.visiblyDisabled(!isEnabled)
 	}
 }

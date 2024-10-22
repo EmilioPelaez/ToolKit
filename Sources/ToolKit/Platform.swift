@@ -39,6 +39,8 @@ public enum Platform {
 		return .mac
 #elseif os(visionOS)
 		return .vision
+#else
+		return .watch
 #endif
 	}
 }

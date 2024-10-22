@@ -20,6 +20,9 @@ public struct OverlayButtonStyle: ButtonStyle {
 				RoundedRectangle(cornerRadius: .paddingMedium, style: .continuous)
 					.foregroundStyle(.regularMaterial)
 			}
+#if canImport(UIKit) && !os(watchOS)
+			.hoverEffect(.lift)
+#endif
 			.visiblyDisabled(!isEnabled)
 	}
 }

@@ -22,6 +22,9 @@ public struct CapsuleButtonStyle: ButtonStyle {
 					.brightness(configuration.isPressed ? -0.25 : 0)
 			}
 			.contentShape(Capsule())
+#if canImport(UIKit) && !os(watchOS)
+			.hoverEffect(.lift)
+#endif
 			.visiblyDisabled(!isEnabled)
 	}
 }

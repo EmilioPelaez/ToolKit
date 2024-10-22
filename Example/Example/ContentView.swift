@@ -5,13 +5,23 @@
 //  Created by Emilio Peláez on 06/10/23.
 //
 
+import AboutKit
 import SwiftUI
 import UIToolKit
 
 struct ContentView: View {
+	@State var showAbout = false
+	
 	var body: some View {
-		Text("Hello, world!")
-			.requires(MyDependency.self)
+		Button("Show About") {
+			showAbout = true
+		}
+		.sheet(isPresented: $showAbout) {
+			AboutView(details: .init(bundle: .main, icon: Image("Icon"), author: "Test"),
+								links: [.init(title: "GitHub", url: URL(string: "https://github.com/emiliopelaez/AboutKit")!)])
+				.padding()
+		}
+		.requires(MyDependency.self)
 	}
 }
 
