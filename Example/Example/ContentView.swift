@@ -20,6 +20,13 @@ struct ContentView: View {
 			AboutView(details: .init(bundle: .main, icon: Image("Icon"), author: "Test"),
 								links: [.init(title: "GitHub", url: URL(string: "https://github.com/emiliopelaez/ToolKit")!)])
 				.padding()
+				.extend()
+				.background(alignment: .topLeading) {
+					ModalDismissButton {
+						showAbout = false
+					}
+					.padding()
+				}
 		}
 		.requires(MyDependency.self)
 	}
