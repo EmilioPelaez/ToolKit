@@ -10,7 +10,7 @@ import SwiftUI
 import UIToolKit
 
 struct ContentView: View {
-	@State var showAbout = false
+	@State var showAbout = true
 	
 	var body: some View {
 		Button("Show About") {
@@ -18,7 +18,7 @@ struct ContentView: View {
 		}
 		.sheet(isPresented: $showAbout) {
 			AboutView(details: .init(bundle: .main, icon: Image("Icon"), author: "Test"),
-								links: [.init(title: "GitHub", url: URL(string: "https://github.com/emiliopelaez/AboutKit")!)])
+								links: [.init(title: "GitHub", url: URL(string: "https://github.com/emiliopelaez/ToolKit")!)])
 				.padding()
 		}
 		.requires(MyDependency.self)
