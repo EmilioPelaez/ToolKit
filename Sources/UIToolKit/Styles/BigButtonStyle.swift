@@ -12,8 +12,7 @@ public struct BigButtonStyle: ButtonStyle {
 	public func makeBody(configuration: Configuration) -> some View {
 		configuration.label
 			.extendHorizontally()
-			.font(.title2)
-			.fontWeight(.medium)
+			.font(.title2.weight(.medium))
 			.foregroundColor(.white)
 			.opacity(configuration.isPressed ? 0.75 : 1)
 			.paddingMedium()

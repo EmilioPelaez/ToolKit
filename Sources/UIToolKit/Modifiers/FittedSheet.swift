@@ -4,6 +4,7 @@
 
 import SwiftUI
 
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 public extension View {
 	func fittedSheet<Item: Identifiable, Content: View>(item binding: Binding<Item?>,
 																											onDismiss: @escaping () -> Void = {},
@@ -25,6 +26,7 @@ public extension View {
 	}
 }
 
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 struct FittedSheetModifier<Item: Identifiable, ItemContent: View>: ViewModifier {
 	@Binding var item: Item?
 	let onDismiss: () -> Void
