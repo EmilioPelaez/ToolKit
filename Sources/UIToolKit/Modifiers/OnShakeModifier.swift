@@ -2,19 +2,16 @@
 //  Created by Emilio Peláez on 19/12/22.
 //
 
+import HierarchyResponder
 import SwiftUI
 #if canImport(UIKit)
 import UIKit
 #endif
 
-public enum ShakeController: HierarchyDependency {}
-
-@available(iOS 16.0, iOSApplicationExtension 16.0, *)
 public extension View {
 	func onShakeController() -> some View {
 #if canImport(UIKit) && !os(watchOS)
 		modifier(OnShakeController())
-			.installs(ShakeController.self, preventDuplicates: true)
 #else
 		self
 #endif
@@ -22,8 +19,7 @@ public extension View {
 	
 	func onShake(_ perform: @escaping () -> Void) -> some View {
 #if canImport(UIKit) && !os(watchOS)
-		modifier(OnShakeObserver(action: perform))
-			.requires(ShakeController.self, mode: .relaxed)
+		subscribe(to: ShakeEvent.self) { _ in perform() }
 #else
 		self
 #endif
@@ -31,53 +27,19 @@ public extension View {
 }
 
 #if canImport(UIKit) && !os(watchOS)
-struct OnShakeKey: PreferenceKey {
-	struct Perform: Equatable {
-		let id = UUID()
-		
-		let closure: () -> Void
-		
-		func callAsFunction() { closure() }
-		
-		static func == (lhs: OnShakeKey.Perform, rhs: OnShakeKey.Perform) -> Bool {
-			lhs.id == rhs.id
-		}
-	}
-	
-	static var defaultValue: Perform?
-	
-	static func reduce(value: inout Perform?, nextValue: () -> Perform?) {
-		let perform1 = value?.closure
-		let perform2 = nextValue()
-		value = .init {
-			perform1?()
-			perform2?()
-		}
-	}
-}
+struct ShakeEvent: Event {}
 
-@available(iOS 16.0, iOSApplicationExtension 16.0, *)
 struct OnShakeController: ViewModifier {
-	@State var perform: OnShakeKey.Perform?
+	@State var publisher: EventPublisher<ShakeEvent>?
 	
 	func body(content: Content) -> some View {
 		content
 			.onReceive(NotificationCenter.default.publisher(for: UIDevice.deviceDidShakeNotification)) { _ in
-				perform?()
+				publisher?(ShakeEvent())
 			}
-			.onPreferenceChange(OnShakeKey.self) { perform = $0 }
-	}
-}
-
-struct OnShakeObserver: ViewModifier {
-	@State var perform: OnShakeKey.Perform?
-	
-	let action: () -> Void
-	
-	func body(content: Content) -> some View {
-		content
-			.onPreferenceChange(OnShakeKey.self) { perform = $0 }
-			.preference(key: OnShakeKey.self, value: perform ?? .init(closure: action))
+			.publisher(for: ShakeEvent.self, destination: .lastSubscriber) {
+				publisher = $0
+			}
 	}
 }
 
