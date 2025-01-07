@@ -34,11 +34,9 @@ public struct ModalDismissButton: View {
 				Image(systemName: "xmark")
 					.if(Platform.current == .vision) {
 						$0.foregroundStyle(.white)
-							.font(.body)
 					} else: {
 						$0.foregroundStyle(.gray)
 							.symbolVariant(.circle.fill)
-							.font(.title)
 					}
 					.symbolRenderingMode(.hierarchical)
 			}
