@@ -37,7 +37,7 @@ struct OnShakeController: ViewModifier {
 			.onReceive(NotificationCenter.default.publisher(for: UIDevice.deviceDidShakeNotification)) { _ in
 				publisher?(ShakeEvent())
 			}
-			.publisher(for: ShakeEvent.self, destination: .lastSubscriber) {
+			.publisher(for: ShakeEvent.self, destination: .lastLevel) {
 				publisher = $0
 			}
 	}
