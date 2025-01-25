@@ -29,8 +29,8 @@ public extension Array where Element: Equatable {
 
 public extension Array {
 	
-	func element(at index: Index) -> Element? {
-		guard index >= 0, index < count else { return nil }
+	subscript(safe index: Int) -> Element? {
+		guard index >= 0 && index < count else { return nil }
 		return self[index]
 	}
 	
