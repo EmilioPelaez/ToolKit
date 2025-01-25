@@ -30,10 +30,10 @@ public struct ViewSerializer<V: View> {
 		renderer.isOpaque = false
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 		guard let image = renderer.nsImage else {
-			throw GenerationError(message: "Unable to render image")
+			throw SerializationError(message: "Unable to render image")
 		}
 		guard let data = data(from: image) else {
-			throw GenerationError(message: "Unable to get image data")
+			throw SerializationError(message: "Unable to get image data")
 		}
 		return IconDocument(name: name, contents: data)
 #elseif canImport(UIKit)

@@ -89,7 +89,7 @@ extension Bundle.Version: Equatable {
 	
 	fileprivate static func arraysMatchingLength(lhs: [Int], rhs: [Int]) -> ([(Int, Int)]) {
 		(0 ..< max(lhs.count, rhs.count)).map { index in
-			(lhs.element(at: index) ?? 0, rhs.element(at: index) ?? 0)
+			(lhs[safe: index] ?? 0, rhs[safe: index] ?? 0)
 		}
 	}
 }
