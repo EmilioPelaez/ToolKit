@@ -27,6 +27,12 @@ struct ContentView: View {
 					}
 					.padding()
 				}
+				.onShake {
+					print("Should trigger")
+				}
+		}
+		.onShake {
+			print("Should not trigger")
 		}
 		.requires(MyDependency.self)
 	}
