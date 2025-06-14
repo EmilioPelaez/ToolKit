@@ -8,7 +8,7 @@
 import CoreImage
 import SwiftUI
 
-@available(iOS 16.0, *)
+@available(iOS 16.0, macOS 13.0, *)
 @MainActor
 public struct ViewSerializer<V: View> {
 	
@@ -35,7 +35,7 @@ public struct ViewSerializer<V: View> {
 		guard let data = data(from: image) else {
 			throw SerializationError(message: "Unable to get image data")
 		}
-		return IconDocument(name: name, contents: data)
+		return data
 #elseif canImport(UIKit)
 		guard let image = renderer.uiImage else {
 			throw SerializationError(message: "Unable to render image")
