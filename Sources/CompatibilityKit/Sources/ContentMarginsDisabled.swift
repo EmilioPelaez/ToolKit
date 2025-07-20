@@ -8,7 +8,7 @@ import WidgetKit
 
 public extension WidgetConfiguration {
 	func compatibleContentMarginsDisabled() -> some WidgetConfiguration {
-		if #available(iOS 17.0, iOSApplicationExtension 17.0, *) {
+		if #available(iOS 17.0, iOSApplicationExtension 17.0, visionOS 26.0, *) {
 			return contentMarginsDisabled()
 		} else {
 			return self

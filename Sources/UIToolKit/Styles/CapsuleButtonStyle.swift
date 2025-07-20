@@ -19,11 +19,15 @@ public struct CapsuleButtonStyle: ButtonStyle {
 			.paddingLarge(.horizontal)
 			.conditional {
 				if #available (iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+#if os(visionOS)
+					$0.background { background(configuration: configuration) }
+#else
 					if preferFlat {
 						$0.background { background(configuration: configuration) }
 					} else {
 						$0.glassEffect(.regular.interactive().tint(color), in: Capsule())
 					}
+#endif
 				} else {
 					$0.background { background(configuration: configuration) }
 				}

@@ -19,11 +19,15 @@ public struct ActionButtonStyle: ButtonStyle {
 			.paddingLarge(.horizontal)
 			.conditional {
 				if #available (iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+#if os(visionOS)
+					$0.background { background(configuration: configuration) }
+#else
 					if preferFlat {
 						$0.background { background(configuration: configuration) }
 					} else {
 						$0.glassEffect(.regular.tint(color), in: shape)
 					}
+#endif
 				} else {
 					$0.background { background(configuration: configuration) }
 				}
