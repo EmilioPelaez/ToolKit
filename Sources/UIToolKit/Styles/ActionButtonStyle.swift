@@ -8,6 +8,7 @@ public struct ActionButtonStyle: ButtonStyle {
 	@Environment(\.isEnabled) private var isEnabled
 	
 	let color: Color
+	let preferFlat: Bool
 	
 	public func makeBody(configuration: Configuration) -> some View {
 		configuration.label
@@ -16,20 +17,38 @@ public struct ActionButtonStyle: ButtonStyle {
 			.opacity(configuration.isPressed ? 0.75 : 1)
 			.paddingMedium()
 			.paddingLarge(.horizontal)
-			.background {
-				color
-					.brightness(configuration.isPressed ? -0.25 : 0)
+			.conditional {
+				if #available (iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+					if preferFlat {
+						$0.background { background(configuration: configuration) }
+					} else {
+						$0.glassEffect(.regular.tint(color), in: shape)
+					}
+				} else {
+					$0.background { background(configuration: configuration) }
+				}
 			}
-			.cornerRadius(.paddingMedium)
+			.contentShape(shape)
+			.contentShape(.hoverEffect, shape)
 #if canImport(UIKit) && !os(watchOS)
 			.hoverEffect(.lift)
 #endif
 			.visiblyDisabled(!isEnabled)
 	}
+	
+	var shape: some Shape {
+		RoundedRectangle(cornerRadius: .paddingMedium, style: .continuous)
+	}
+	
+	func background(configuration: Configuration) -> some View {
+		shape
+			.foregroundStyle(color)
+			.brightness(configuration.isPressed ? -0.25 : 0)
+	}
 }
 
 public extension ButtonStyle where Self == ActionButtonStyle {
-	static func action(_ color: Color) -> ActionButtonStyle {
-		ActionButtonStyle(color: color)
+	static func action(_ color: Color, preferFlat: Bool = false) -> ActionButtonStyle {
+		ActionButtonStyle(color: color, preferFlat: preferFlat)
 	}
 }
