@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/EmilioPelaez/CGMath",
       "state" : {
-        "revision" : "352dc9a0c5ea8db162714944c68de1fa7ae3e4bf",
-        "version" : "1.0.4"
+        "revision" : "3c67235bca4719249647b80c46aa02bf30a5b780",
+        "version" : "1.0.5"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/EmilioPelaez/HierarchyResponder",
       "state" : {
-        "revision" : "3ed6833610b046c83c4f4322af3ee652f50f31ff",
-        "version" : "1.1.1"
+        "revision" : "df62cd74bb7bbe086f49189f5d2b8da1fba6ec41",
+        "version" : "1.2.1"
       }
     }
   ],
