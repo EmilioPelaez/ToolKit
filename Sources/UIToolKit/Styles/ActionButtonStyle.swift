@@ -33,7 +33,6 @@ public struct ActionButtonStyle: ButtonStyle {
 				}
 			}
 			.contentShape(shape)
-			.contentShape(.hoverEffect, shape)
 #if canImport(UIKit) && !os(watchOS)
 			.hoverEffect(.lift)
 #endif

@@ -7,7 +7,7 @@ import SwiftUI
 public extension View {
 	@ViewBuilder
 	func numericTextTransition(countsDown: Bool = false) -> some View {
-		if #available(iOS 17.0, iOSApplicationExtension 17.0, *) {
+		if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, iOSApplicationExtension 16.0, *) {
 			contentTransition(.numericText(countsDown: countsDown))
 		} else {
 			self
