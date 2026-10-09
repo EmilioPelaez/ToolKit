@@ -11,40 +11,18 @@ public struct AboutView: View {
 	private let iconSize: CGFloat = Platform.current == .vision ? 100 : 150
 	
 	let details: AppDetails
+	let prerenderedIcon: Bool
 	let links: [AboutLink]
 	
-	public init(details: AppDetails, links: [AboutLink] = []) {
+	public init(details: AppDetails, prerenderedIcon: Bool = false, links: [AboutLink] = []) {
 		self.details = details
+		self.prerenderedIcon = prerenderedIcon
 		self.links = links
 	}
 	
 	public var body: some View {
 		VStack(alignment: .center, spacing: .paddingLarge) {
-#if os(visionOS)
-			ZStack(alignment: .center) {
-				ZStack {
-					Circle()
-						.fill(.black)
-					iconView
-						.opacity(0.15)
-				}
-				.frame(width: iconSize * 0.85, height: iconSize * 0.85)
-				.opacity(0.35)
-				.blur(radius: 15)
-				iconView
-					.frame(width: iconSize, height: iconSize)
-					.frame(depth: 50)
-			}
-#else
-			ZStack(alignment: .bottom) {
-				iconView
-					.frame(width: iconSize, height: iconSize / 10)
-					.blur(radius: 10)
-					.offset(x: 0, y: iconSize / 50)
-				iconView
-					.frame(width: iconSize, height: iconSize)
-			}
-#endif
+			iconView
 			VStack(alignment: .center, spacing: 0) {
 				Text(details.name)
 					.font(.largeTitle)
@@ -71,14 +49,65 @@ public struct AboutView: View {
 		}
 	}
 	
+	@ViewBuilder
 	var iconView: some View {
+		if prerenderedIcon {
+			icon
+				.shadowed(size: iconSize)
+		} else {
+#if os(visionOS)
+			visionIcon
+#else
+			renderedIcon
+#endif
+		}
+	}
+	
+	var icon: some View {
 		details.icon
 			.resizable()
-			.if(Platform.current == .vision) {
-				$0.clipShape(Circle())
-			} else : {
-				$0.clipShape(RoundedRectangle(cornerRadius: iconSize / 6, style: .continuous))
+	}
+	
+	var renderedIcon: some View {
+		icon
+			.clipShape(RoundedRectangle(cornerRadius: iconSize / 6, style: .continuous))
+			.shadowed(size: iconSize)
+	}
+	
+#if os(visionOS)
+	var visionIcon: some View {
+		ZStack(alignment: .center) {
+			ZStack {
+				Circle()
+					.fill(.black)
+				icon
+					.clipShape(Circle())
+					.opacity(0.15)
 			}
+			.frame(width: iconSize * 0.85, height: iconSize * 0.85)
+			.opacity(0.35)
+			.blur(radius: 15)
+			icon
+				.clipShape(Circle())
+				.frame(width: iconSize, height: iconSize)
+				.frame(depth: 50)
+		}
+	}
+#endif
+	
+	
+}
+
+extension View {
+	func shadowed(size: CGFloat) -> some View {
+		ZStack(alignment: .bottom) {
+			self
+				.frame(width: size, height: size / 10)
+				.blur(radius: 10)
+				.offset(x: 0, y: size / 50)
+			self
+				.frame(width: size, height: size)
+		}
 	}
 }
 
